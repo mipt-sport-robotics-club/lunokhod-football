@@ -1,0 +1,26 @@
+{
+  "titleMainWindow": "Окно",
+  "titleSettingsWindow": "Окно 2",
+  "settings": "Настройки",
+  "Command server address": "Адрес командного сервера",
+  "Command server port": "Порт командного сервера",
+  "Command server login": "Логин командного сервера",
+  "Command server password": "Пароль командного сервера",
+  "Telemetry server address": "Адрес сервера телеметрии",
+  "Telemetry server login": "Логин сервера телеметрии",
+  "Telemetry server password": "Пароль сервера телеметрии",
+  "Telemetry server port": "Порт сервера телеметрии",
+  "Video server address": "Адрес видеосервера",
+  "Command name": "Имя команды",
+  "Robot name": "Имя робота",
+  "Bluetooth MAC-address": "MAC-адрес модуля bluetooth",
+  "SaveBtn": "Сохранить",
+  "Bindkey": "Назначить клавишу",
+  "InputCommand": "Отправляемая команда",
+  "serverTimeError": "Ошибка сервера. Попробуйте позже",
+  "incorrectData": "Данные введены некорректно",
+  "UseTelemetryServer": "Использовать сервер телеметрии",
+  "ClearBinds": "Очистить бинды на клавиши"
+
+
+}
