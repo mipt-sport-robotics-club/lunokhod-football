@@ -2,7 +2,6 @@ import paho.mqtt.client as mqtt
 import bluetooth
 import threading
 import time
-import queue
 import json
 
 port = 1
@@ -10,8 +9,8 @@ topics = []
 bd_addr = []
 sockets = {}
 
-login = "login"
-password = "passwd"
+login = "calliska"
+password = "mXCRI5"
 
 server = "localhost"
 
@@ -24,38 +23,31 @@ def on_connect(client, userdata, flags, rc):
 
     for i in range(num):
         client.subscribe(topics[i])
+        client.subscribe(topics[i] + '/server')
+        client.subscribe(topics[i] + '/addMac')
         millis1.append(1)
         millis2.append(1)
-        print(millis1, millis2)
 
 
 def on_message(client, userdata, msg):
     tosend = str(msg.payload)
     tosend = tosend[2:len(tosend) - 1]
-    try:
-        sockets[msg.topic].send(tosend + "\n")
-    except:
-        client.publish(msg.topic + "/status", "204")
-
-
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-client.username_pw_set(login, password=password)
-client.connect(server, 1883, 60)
-
-with open('config.json', 'r', encoding='utf-8') as f:
-    text = json.load(f)
-
-num = 0
-
-for cmd in text['commands']:
-    num += 1
-    topics.append(cmd['topic'])
-    bd_addr.append(cmd['mac'])
-text = ""
-
-connecting = True
+    topic = str(msg.topic)
+    print(tosend)
+    if topic.find('server') > -1 and tosend.find('cams') > -1:
+        pld = ', '.join(map(str, cams))
+        pld = pld.replace('\'', '"')
+        client.publish(msg.topic, "[" + pld + "]")
+    elif topic.find('addMac') > -1:
+        pass
+    elif topic.find('/') > -1:
+        pass
+    else:
+        print(tosend)
+        try:
+            sockets[msg.topic].send(tosend + "\n")
+        except:
+            client.publish(msg.topic + "/status", "204")
 
 
 def connect():
@@ -68,12 +60,7 @@ def connect():
         except:
             client.publish(topics[i] + "/status", "202")
         sockets[topics[i]] = sock
-    connecting = False
     print("connection done")
-
-
-connectThread = threading.Thread(target=connect, args=(), daemon=True)
-connectThread.start()
 
 
 def bl_reconnect():
@@ -121,9 +108,32 @@ def hb_rec():
                     client.publish(topics[i] + "/time", str(millis2[i] - millis1[i]))
                 if msg == "l":
                     client.publish(topics[i] + "/status", "201")
-            except Exception as e:
+            except:
                 pass
 
+
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+client.username_pw_set(login, password=password)
+client.connect(server, 1883, 60)
+
+with open('config.json', 'r', encoding='utf-8') as f:
+    text = json.load(f)
+
+with open('camsConfig.json', 'r', encoding='utf-8') as f:
+    cams = json.load(f)
+
+num = 0
+
+for cmd in text['commands']:
+    num += 1
+    topics.append(cmd['topic'])
+    bd_addr.append(cmd['mac'])
+text = ""
+
+connectThread = threading.Thread(target=connect, args=(), daemon=True)
+connectThread.start()
 
 reconnThread = threading.Thread(target=bl_reconnect, args=(), daemon=True)
 reconnThread.start()
@@ -135,8 +145,3 @@ heartbitThread2 = threading.Thread(target=hb_rec, args=(), daemon=True)
 heartbitThread2.start()
 
 client.loop_forever()
-
-msg = ""
-
-for i in range(num):
-    sockets[topics[i]].close()
