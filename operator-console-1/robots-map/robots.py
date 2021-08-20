@@ -4,9 +4,9 @@ import json
 from PIL import Image, ImageTk
 from math import atan, degrees
 
-mqtt_username = "explorer"
-mqtt_password = "hnt67kl"
-mqtt_host = "185.43.6.119"
+mqtt_username = "user"
+mqtt_password = "passwd"
+mqtt_host = "localhost"
 robotsNum = 6
 pitchCornersIdList = [1, 2, 3]
 
