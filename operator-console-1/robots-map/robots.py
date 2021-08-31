@@ -116,9 +116,12 @@ def on_message(client, userdata, msg):
             pass
 
     if topic.__contains__(topicBall[:len(topicBall) - 2]):
-        ballX = mapp(data['ball']['center']['x'], 0, cameraResolution[0], 0, pitchSize[0])
-        ballY = mapp(data['ball']['center']['y'], 0, cameraResolution[1], 0, pitchSize[1])
-        canvas.coords(ball, ballX - 5, ballY - 5, ballX + 5, ballY + 5)
+        if data['ball'] == "None":
+            canvas.coords(ball, 0, 0, 0, 0)
+        else:
+            ballX = mapp(data['ball']['center']['x'], 0, cameraResolution[0], 0, pitchSize[0])
+            ballY = mapp(data['ball']['center']['y'], 0, cameraResolution[1], 0, pitchSize[1])
+            canvas.coords(ball, ballX - 5, ballY - 5, ballX + 5, ballY + 5)
 
 
 client = paho.Client()
