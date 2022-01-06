@@ -4,10 +4,12 @@
 - **Camera** - видеокамера. Именованный объект, характеризуется площадкой нахождения, расположением на ней, маркой (и, соответственно, возможностями). Может использоваться как [videostream camera](#VSC), часть [ARUCO detector module](#ADM), часть [ball detector module](#BDM), [on-robot FPV camera](#RFPV), часть [on-robot computer vision camera](#RCV)
 - **<a name="VSC"><a>Videostream camera (VSC)** - камера, отправляющая видеопоток для демонстрации операторам и зрителям. Видеопоток отправляется в [VSS](#VSS). VCS подключается к VSS по RTSP, видеопоток направляется по RTP. Реализация VSC может быть как на RaspberryPi+RaspiCam, так и на готовых IP камерах или других вариантах (ESP*, OrangePi etc)
 - **<a name="ADM"><a>ARUCO detector module (ADM)** - детектор ARUCO меток на роботах и [AGM](#AGM). При возможности детектирует также [NGM](#NGM). Реализуется (на момент написания глоссария) на RaspberryPi 4 + RaspiCav v2. Отправляет координаты обнаруженных меток в [GDES](#GDES)
-- **<a name="BDM"><a>Ball detector module (BDM)** - bbb
-- **<a name="RFPV"><a>On-robot FPV camera (RFPV)** - 
-- **<a name="RCV"><a>On-robot computer vision camera (RCV)** - 
+- **<a name="BDM"><a>Ball detector module (BDM)** - детектор мяча (красного цвета) и [AGM](#AGM). При возможности детектирует также [NGM](#NGM). Реализуется (на момент написания глоссария) на RaspberryPi 4 + RaspiCav v2. Отправляет координаты мяча и меток в [GDES](#GDES)
+- **<a name="RFPV"><a>On-robot FPV camera (RFPV)** - камера, установленная на роботе и транслирующая видеопоток на [VSS](#VSS)
+- **<a name="RCV"><a>On-robot computer vision camera (RCV)** - камера, установленная на роботе и используемая для автономного управления с использованием технического зрения
 - **<a name="VSS"><a>Videostream server (VSS)** - сервер, скорее всего, виртуальный, получающий видеопоток с VCS одной или нескольких площадок и маршрутизирующий потребителям. Помимо собственно videostream сервера содержит OpenVPN сервер для создания тоннелей до маршрутизаторов для использования RTSP (подключение инициируется камерой)
-- **<a name="NGM"><a>Natural geometry markers (NGM)**
-- **<a name="AGM"><a>Artificial geometry markers (AGM)**
+- **<a name="NGM"><a>Field geometry map (FGM)** - описание в структурированном формате (JSON) геометрии поля: размеров и расположения ворот и маркеров [NGM](#NGM) и [AGM](#AGM) для ориентации на поле
+- **<a name="NGM"><a>Natural geometry markers (NGM)** - характерные точки, образуемые пересечением линий разметки поля (границы поля, середина поля, центральный круг и вратарские площадки)
+- **<a name="AGM"><a>Artificial geometry markers (AGM)** - установленные в определённых точках поля ARUCO метки для использования при ориентировании [WCS](#WCS)
 - **<a name="GDES"><a>Game data exchange server (GDES)** - MQTT сервер
+- **<a name="WCS"><a>World coordinates service (WCS)** - 
