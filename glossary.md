@@ -1,12 +1,13 @@
 Глоссарий определений и названий компонентов для однозначной идентификации и использования в стандартах наименований.
 
 - **Robot** - именованный объект, соответствующий физическому роботу. Название робота должно быть уникально в рамках команды. Глобальная уникальность названия робота образуется добавлением имени команды <Team>.<Robot> Робот является получателем потока управляющих команд и сообщений о игровой ситуации. Робот является источником потока мониторинговых сообщений.
-- **Camera** - видеокамера. Именованный объект, характеризуется площадкой нахождения, расположением на ней, маркой (и, соответственно, возможностями). Может использоваться как videostream camera, часть ARUCO detector module, часть ball detector module, on-robot FPV camera, 
+- **Camera** - видеокамера. Именованный объект, характеризуется площадкой нахождения, расположением на ней, маркой (и, соответственно, возможностями). Может использоваться как [videostream camera](#VSC), часть [ARUCO detector module](#ADM), часть [ball detector module](#BDM), [on-robot FPV camera](#RFPV), часть [on-robot computer vision camera](#RCV)
 - **<a name="VSC"><a>Videostream camera (VSC)** - камера, отправляющая видеопоток для демонстрации операторам и зрителям. Видеопоток отправляется в [VSS](#VSS). VCS подключается к VSS по RTSP, видеопоток направляется по RTP. Реализация VSC может быть как на RaspberryPi+RaspiCam, так и на готовых IP камерах или других вариантах (ESP*, OrangePi etc)
-- **<a name="ADM"><a>ARUCO detector module (ADM)** - детектор ARUCO меток на роботах и [AGM](#AGM). Реализуется (на момент написания глоссария) на RaspberryPi 4 + RaspiCav v2.
+- **<a name="ADM"><a>ARUCO detector module (ADM)** - детектор ARUCO меток на роботах и [AGM](#AGM). При возможности детектирует также [NGM](#NGM). Реализуется (на момент написания глоссария) на RaspberryPi 4 + RaspiCav v2. Отправляет координаты обнаруженных меток в [GDES](#GDES)
 - **<a name="BDM"><a>Ball detector module (BDM)** - bbb
 - **<a name="RFPV"><a>On-robot FPV camera (RFPV)** - 
 - **<a name="RCV"><a>On-robot computer vision camera (RCV)** - 
 - **<a name="VSS"><a>Videostream server (VSS)** - сервер, скорее всего, виртуальный, получающий видеопоток с VCS одной или нескольких площадок и маршрутизирующий потребителям. Помимо собственно videostream сервера содержит OpenVPN сервер для создания тоннелей до маршрутизаторов для использования RTSP (подключение инициируется камерой)
 - **<a name="NGM"><a>Natural geometry markers (NGM)**
 - **<a name="AGM"><a>Artificial geometry markers (AGM)**
+- **<a name="GDES"><a>Game data exchange server (GDES)** - MQTT сервер
